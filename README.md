@@ -1,352 +1,310 @@
-Financial Transaction & Budget Management Backend System
+# Financial Transaction & Budget Management Backend System
 
-A Java-based backend system for managing personal financial transactions, accounts, and monthly budgets.
+A **Java-based backend system** for managing personal financial transactions, accounts, and monthly budgets.  
 The system enables users to track income and expenses, organize transactions into categories, enforce financial constraints, and generate analytical summaries of spending behavior.
 
-This project demonstrates backend development concepts including relational database design, transactional integrity, financial data consistency, and analytics queries using JDBC with MySQL.
+This project demonstrates backend development concepts including **relational database design, transactional integrity, financial data consistency, and analytics queries** using **JDBC with MySQL**.
 
-Tech Stack
+---
 
-Backend
+# Tech Stack
 
-Java (JDK 17)
+## Backend
+- Java (JDK 17)
+- JDBC
 
-JDBC
+## Database
+- MySQL
 
-Database
+## Development Tools
+- IntelliJ IDEA
+- Git & GitHub
 
-MySQL
+---
 
-Development Tools
+# System Overview
 
-IntelliJ IDEA
-
-Git & GitHub
-
-System Overview
-
-The system models a realistic financial management backend where users maintain multiple accounts and track financial activity through categorized transactions.
+The system models a **realistic financial management backend** where users maintain multiple accounts and track financial activity through categorized transactions.
 
 Core capabilities include:
 
-Managing user accounts
+- Managing user accounts
+- Recording income and expense transactions
+- Tracking monthly category budgets
+- Maintaining financial integrity through transactions
+- Generating analytical insights from stored data
+- Maintaining audit logs for financial actions
 
-Recording income and expense transactions
+---
 
-Tracking monthly category budgets
+# Core Features
 
-Maintaining financial integrity through transactions
-
-Generating analytical insights from stored data
-
-Maintaining audit logs for financial actions
-
-Core Features
-User Management
+## User Management
 
 Users can register and authenticate into the system.
 
-Capabilities:
+**Capabilities**
+- Register new users
+- Secure login authentication
+- Unique username enforcement
 
-Register new users
+---
 
-Secure login authentication
+## Account Management
 
-Unique username enforcement
+Each user can maintain **multiple financial accounts**, such as:
 
-Account Management
+- Savings account
+- Salary account
+- Wallet
 
-Each user can maintain multiple financial accounts such as:
+**Features**
 
-Savings account
+- Account creation
+- Balance tracking
+- Account-specific transaction history
 
-Salary account
+---
 
-Wallet
-
-Features:
-
-Account creation
-
-Balance tracking
-
-Account-specific transaction history
-
-Transaction Management
+## Transaction Management
 
 The system allows users to record financial transactions.
 
-Supported operations:
+**Supported operations**
 
-Add income transactions
-
-Add expense transactions
-
-Categorize transactions
-
-Maintain transaction history
+- Add income transactions
+- Add expense transactions
+- Categorize transactions
+- Maintain transaction history
 
 Each transaction records:
 
-Account used
+- Account used
+- Category
+- Amount
+- Description
+- Timestamp
 
-Category
+---
 
-Amount
-
-Description
-
-Timestamp
-
-Category System
+## Category System
 
 Transactions are organized using categories such as:
 
-Food
-
-Transport
-
-Rent
-
-Salary
-
-Entertainment
-
-Investment
+- Food
+- Transport
+- Rent
+- Salary
+- Entertainment
+- Investment
 
 Each category is linked to:
 
-A user
+- A user
+- A transaction type (`INCOME` / `EXPENSE`)
 
-A transaction type (Income / Expense)
+This allows **structured financial analysis.**
 
-This allows structured financial analysis.
+---
 
-Monthly Budget Tracking
+## Monthly Budget Tracking
 
-Users can set monthly spending limits for categories.
+Users can set **monthly spending limits** for categories.
 
-Example:
-
-Category	Monthly Limit
-Food	₹5000
-Transport	₹2000
+| Category | Monthly Limit |
+|--------|--------|
+| Food | ₹5000 |
+| Transport | ₹2000 |
 
 The system tracks spending against these budgets.
 
-Financial Analytics
+---
+
+# Financial Analytics
 
 The system provides analytical insights including:
 
-Category Spending Summary
+## Category Spending Summary
 
 Shows total spending per category.
 
 Example:
-
-Food → ₹3200
-Transport → ₹1200
-
-Monthly Expense Summary
-
-Displays monthly spending trends.
-
-Example:
-
 Month 1 → ₹10500
 Month 2 → ₹9200
 
-Category Breakdown
+
+---
+
+## Category Breakdown
 
 Provides detailed expense distribution across categories.
 
-Transaction History
+---
+
+## Transaction History
 
 Retrieve transaction records based on:
 
-Account ID
+- Account ID
+- Category
+- Date range
 
-Category
+---
 
-Date range
+# Transaction Integrity (ACID Handling)
 
-Transaction Integrity (ACID Handling)
+Financial systems must **never corrupt balances**.
 
-Financial systems must never corrupt balances.
-
-This project uses JDBC transaction management:
+This project uses **JDBC transaction management**:
 
 setAutoCommit(false)
-
 commit()
+rollback()
 
-rollback() on failure
 
-Example scenario handled safely:
+### Example transaction flow
 
-Insert transaction
+1. Insert transaction
+2. Update account balance
+3. Write audit log
 
-Update account balance
+If any step fails → **full rollback occurs**.
 
-Write audit log
+---
 
-If any step fails → full rollback occurs.
-
-Financial Integrity Rules
+# Financial Integrity Rules
 
 The system enforces:
 
-No negative account balances
+- No negative account balances
+- Foreign key constraints
+- Mandatory fields
+- Unique username constraint
 
-Foreign key integrity
+These ensure **data reliability and consistency.**
 
-Mandatory fields
+---
 
-Unique username constraint
-
-These ensure data reliability and consistency.
-
-Audit Logging
+# Audit Logging
 
 Every financial operation is recorded.
 
-Logged actions include:
+**Logged actions include**
 
-Transaction creation
-
-Transaction updates
-
-Transaction deletion
+- Transaction creation
+- Transaction updates
+- Transaction deletion
 
 Audit logs store:
 
-User ID
+- User ID
+- Action type
+- Entity affected
+- Timestamp
 
-Action type
+This simulates **real-world financial system traceability.**
 
-Entity affected
+---
 
-Timestamp
+# Database Schema
 
-This simulates real-world financial system traceability.
-
-Database Schema
-
-The system uses a normalized relational schema.
+The system uses a **normalized relational schema**.
 
 Main tables:
 
-users
+- `users`
+- `accounts`
+- `transactions`
+- `categories`
+- `budgets`
+- `audit_logs`
 
-accounts
+### Relationships
 
-transactions
+- User → Accounts
+- User → Categories
+- Account → Transactions
+- Category → Transactions
+- User → Budgets
 
-categories
+Foreign key constraints maintain **referential integrity**.
 
-budgets
+---
 
-audit_logs
+# Project Structure
 
-Relationships include:
+### Example transaction flow
 
-User → Accounts
-User → Categories
-Account → Transactions
-Category → Transactions
-User → Budgets
+1. Insert transaction
+2. Update account balance
+3. Write audit log
 
-Foreign key constraints maintain referential integrity.
+If any step fails → **full rollback occurs**.
 
-Project Structure
-src
-│
-├── database
-│   └── schema.sql
-│
-├── db
-│   └── DBConnection.java
-│
-├── service
-│   ├── UserService.java
-│   ├── TransactionService.java
-│   ├── BudgetService.java
-│   └── AnalyticsService.java
-│
-├── util
-│   └── AuditLogger.java
-│
-└── Main.java
-How to Run the Project
-1 Clone the repository
-git clone https://github.com/Ramm-Lakshmanan/financial-transaction-budget-system.git
-2 Setup the database
+---
 
-Create database:
+# Financial Integrity Rules
 
-CREATE DATABASE finance_tracker;
+The system enforces:
 
-Run the schema file:
+- No negative account balances
+- Foreign key constraints
+- Mandatory fields
+- Unique username constraint
 
-src/database/schema.sql
-3 Configure database connection
+These ensure **data reliability and consistency.**
 
-Update credentials in:
+---
 
-DBConnection.java
+# Audit Logging
 
-Example:
+Every financial operation is recorded.
 
-jdbc:mysql://localhost:3306/finance_tracker
-4 Run the application
+**Logged actions include**
 
-Execute:
+- Transaction creation
+- Transaction updates
+- Transaction deletion
 
-Main.java
+Audit logs store:
 
-The CLI interface will allow:
+- User ID
+- Action type
+- Entity affected
+- Timestamp
 
-User registration
+This simulates **real-world financial system traceability.**
 
-Login
+---
 
-Transaction entry
+# Database Schema
 
-Analytics queries
+The system uses a **normalized relational schema**.
 
-Learning Outcomes
+Main tables:
 
-This project demonstrates practical understanding of:
+- `users`
+- `accounts`
+- `transactions`
+- `categories`
+- `budgets`
+- `audit_logs`
 
-Backend system design
+### Relationships
 
-Relational database modeling
+- User → Accounts
+- User → Categories
+- Account → Transactions
+- Category → Transactions
+- User → Budgets
 
-JDBC database interaction
+Foreign key constraints maintain **referential integrity**.
 
-Transaction management
+---
 
-Financial data consistency
 
-SQL analytical queries
+Author: Ramm Lakshmanan
 
-Future Improvements
-
-Possible extensions:
-
-REST API using Spring Boot
-
-Web dashboard for analytics
-
-Graphical spending visualizations
-
-JWT authentication
-
-Docker deployment
-
-Author
-
-Ramm Lakshmanan
 
 GitHub:
 https://github.com/Ramm-Lakshmanan
